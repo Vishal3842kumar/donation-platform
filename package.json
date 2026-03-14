@@ -1,4 +1,10 @@
 {
+  "name": "donation-platform",
+  "private": true,
+  "scripts": {
+    "start": "node backend/server.js",
+    "postinstall": "cd backend && npm install"
+  },
   "devDependencies": {
     "gh-pages": "^6.3.0"
   }
