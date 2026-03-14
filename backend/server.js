@@ -48,13 +48,18 @@ app.use('/api/charities', charityRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+// Serve static files in production (only if frontend build exists)
+const frontendBuildPath = path.join(__dirname, '../frontend/build');
+const frontendIndex = path.join(frontendBuildPath, 'index.html');
+
+if (process.env.NODE_ENV === 'production' && require('fs').existsSync(frontendIndex)) {
+  app.use(express.static(frontendBuildPath));
   // Catch-all handler to serve React app for non-API routes
   app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    res.sendFile(frontendIndex);
   });
+} else if (process.env.NODE_ENV === 'production') {
+  console.warn('⚠️ Frontend build not found; skipping static file serving.');
 }
 
 const PORT = process.env.PORT || 5000;
