@@ -3,7 +3,10 @@ const Charity = require('./models/Charity');
 const Donation = require('./models/Donation');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
-require('dotenv').config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
+
+// Set defaults if not loaded
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vishal3842kumar_db_user:hU1c54LqPSDNeF0a@cluster0.6eexiau.mongodb.net/donation-platform?retryWrites=true&w=majority';
 
 const sampleCharities = [
   {

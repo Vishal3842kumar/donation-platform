@@ -19,6 +19,25 @@ function CharityList() {
     { value: 'humanitarian', label: '❤️ Humanitarian' }
   ];
 
+  const filterCharities = useCallback(() => {
+    let filtered = charities;
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(charity =>
+        charity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        charity.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(charity => charity.category === selectedCategory);
+    }
+
+    setFilteredCharities(filtered);
+  }, [charities, searchTerm, selectedCategory]);
+
   useEffect(() => {
     fetchCharities();
   }, []);
@@ -102,25 +121,6 @@ function CharityList() {
       setLoading(false);
     }
   };
-
-  const filterCharities = useCallback(() => {
-    let filtered = charities;
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(charity =>
-        charity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        charity.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(charity => charity.category === selectedCategory);
-    }
-
-    setFilteredCharities(filtered);
-  }, [charities, searchTerm, selectedCategory]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

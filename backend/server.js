@@ -5,7 +5,13 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Load environment variables
-dotenv.config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
+
+// Set defaults if not loaded
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://vishal3842kumar_db_user:hU1c54LqPSDNeF0a@cluster0.6eexiau.mongodb.net/donation-platform?retryWrites=true&w=majority';
+process.env.PORT = process.env.PORT || '5000';
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_jwt_key_here_make_it_long_and_random_123456789';
+process.env.FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 const app = express();
 
