@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Button, Form, InputGroup, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -25,7 +25,7 @@ function CharityList() {
 
   useEffect(() => {
     filterCharities();
-  }, [searchTerm, selectedCategory, charities]);
+  }, [searchTerm, selectedCategory, charities, filterCharities]);
 
   const fetchCharities = async () => {
     try {
@@ -103,7 +103,7 @@ function CharityList() {
     }
   };
 
-  const filterCharities = () => {
+  const filterCharities = useCallback(() => {
     let filtered = charities;
 
     // Filter by search term
@@ -120,7 +120,7 @@ function CharityList() {
     }
 
     setFilteredCharities(filtered);
-  };
+  }, [charities, searchTerm, selectedCategory]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

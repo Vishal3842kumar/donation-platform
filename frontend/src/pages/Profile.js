@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Alert, Spinner, Table, Badge } from 'react-bootstrap';
 import api from '../services/api';
@@ -21,9 +21,9 @@ function Profile() {
     
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
-  }, [navigate]);
+  }, [navigate, fetchUserAndDonations]);
 
-  const fetchUserAndDonations = async () => {
+  const fetchUserAndDonations = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -70,7 +70,7 @@ function Profile() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

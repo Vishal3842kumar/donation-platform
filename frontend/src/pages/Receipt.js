@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Container, Card, Button, Alert } from 'react-bootstrap';
 import api from '../services/api';
@@ -36,9 +36,9 @@ function Receipt() {
     }
 
     fetchDonation();
-  }, [donationId, location]);
+  }, [donationId, location, fetchDonation]);
 
-  const fetchDonation = async () => {
+  const fetchDonation = useCallback(async () => {
     try {
       // First try to fetch from the backend
       try {
@@ -82,7 +82,7 @@ function Receipt() {
       setError('Unable to load receipt. Please try again.');
       setLoading(false);
     }
-  };
+  }, [donationId]);
 
   const downloadReceipt = () => {
     if (!donation) return;

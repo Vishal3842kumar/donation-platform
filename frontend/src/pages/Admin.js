@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Container, Row, Col, Card, Table, Button, Alert, Form } from 'react-bootstrap';
 import api from '../services/api';
 
@@ -14,7 +14,7 @@ function Admin() {
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
 
-  const headers = { Authorization: `Bearer ${token}` };
+  const headers = useMemo(() => ({ Authorization: `Bearer ${token}` }), [token]);
 
   useEffect(() => {
     if (!token) {

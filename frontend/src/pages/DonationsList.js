@@ -8,7 +8,6 @@ function DonationsList() {
   const [error, setError] = useState(null);
   const [filterEmail, setFilterEmail] = useState('');
   const [filteredDonations, setFilteredDonations] = useState([]);
-  const [lastRefresh, setLastRefresh] = useState(new Date());
 
   useEffect(() => {
     fetchDonations();
