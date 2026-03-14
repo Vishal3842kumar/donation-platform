@@ -37,7 +37,6 @@ function DonationsList() {
       console.log('Donations fetched:', sortedDonations.length);
       setDonations(sortedDonations);
       setFilteredDonations(sortedDonations);
-      setLastRefresh(new Date());
     } catch (err) {
       const errorMsg = err?.response?.data?.error || err.message || 'Failed to fetch donations';
       setError(errorMsg);
